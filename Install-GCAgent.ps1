@@ -1,10 +1,11 @@
 <#
 
 #>
-
-$aggregatorIP =     [string]$aggregator[0], 
-$installPass =      [string]$agentpass[1],
-$installProfile =   [string]$profile[2]     
+param(
+    [string]$aggregatorIP, 
+    [string]$installPass, 
+    [string]$installProfile)
+    
 $FileDestination = "C:\windows\temp\windows_installer.exe"
 
 ################################################
