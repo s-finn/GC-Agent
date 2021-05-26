@@ -21,13 +21,16 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
     }
 }
 "@
+[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
-    Try{
+#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+Try{
     Invoke-WebRequest -uri "https://$aggregatorIP/windows_installer.exe?profile=$profile" -outfile $FileDestination
-    }
-    Catch [System.WebException] {
+}
+Catch [System.WebException] {
        Write-Verbose "An exception occurred: $($_.Exception.Message) "
-    }
+}
 
-    Invoke-Expression -Command "$FileDestination /a $aggregatorIP /p $installPass /installation-profile $InstallProfile"
+Invoke-Expression -Command "$FileDestination /a $aggregatorIP /p $installPass /installation-profile $InstallProfile"
 
